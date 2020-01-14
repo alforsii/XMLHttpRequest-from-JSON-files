@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>JSON crash course</title>
+  </head>
+  <body>
+    <ul id="output"></ul>
+    <ul id="output2"></ul>
+    <script>
+      const arr = [
+        { name: 'John', age: 35 },
+        { name: 'Brad', age: 25 },
+        { name: 'Sara', age: 45 },
+      ];
+      //1. to make JSON format
+      const jsonArr = JSON.stringify(arr);
+      console.log('jsonArr', jsonArr);
+      //2.
+      console.log(jsonArr[0].name); // undefined because it's JSON format
+      //3.to revert from JSON to JavaScript array
+      const jsArr = JSON.parse(jsonArr);
+      console.log(' jsArr', jsArr);
+      //4. Lets out put to the string
+      let output1 = '';
+      for (let i = 0; i < arr.length; i++) {
+        output1 += `<li>${arr[i].name}</li>`;
+      }
+      document.getElementById('output').innerHTML = output1;
+
+      // //5. from 'people.json'
+      // let xmlHttp = new XMLHttpRequest();
+      // xmlHttp.open('GET', 'people.json', true);
+      // xmlHttp.onreadystatechange = function() {
+      //   if (this.readyState == 4 && this.status == 200) {
+      //     let response = JSON.parse(xmlHttp.responseText);
+      //     let people = response.people;
+      //     let output = '';
+      //     for (let i = 0; i < people.length; i++) {
+      //       output += `<li>${people[i].name}</li>`;
+      //     }
+      //     document.getElementById('output2').innerHTML = output;
+      //   }
+      // };
+      // xmlHttp.send();
+
+      //6. from 'https://jsonplaceholder.typicode.com/users'
+      let xmlHttp = new XMLHttpRequest();
+      xmlHttp.open('GET', 'https://jsonplaceholder.typicode.com/users', true);
+      xmlHttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          let response = JSON.parse(xmlHttp.responseText);
+          // console.log(response);
+          let output = '';
+          for (let i = 0; i < response.length; i++) {
+            output += `<li>${response[i].name}</li>`;
+          }
+          document.getElementById('output2').innerHTML = output;
+        }
+      };
+      xmlHttp.send();
+    </script>
+  </body>
+</html>
